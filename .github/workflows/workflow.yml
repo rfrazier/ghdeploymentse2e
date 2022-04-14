@@ -9,14 +9,18 @@ on:
 
 jobs:
 
+  # Build the app and db.
+  build:
+    uses: rfrazier/ghdeploymentse2e/.github/workflows/build.yml@main
+
   # Lint the Bicep file.
   lint:
-    uses: YOUR_GITHUB_USERNAME/toy-website-end-to-end/.github/workflows/lint.yml@main
+    uses: rfrazier/ghdeploymentse2e/.github/workflows/lint.yml@main
 
   # Deploy to the test environment.
   deploy-test:
-    uses: YOUR_GITHUB_USERNAME/toy-website-end-to-end/.github/workflows/deploy.yml@main
-    needs: lint
+    uses: rfrazier/ghdeploymentse2e/.github/workflows/deploy.yml@main
+    needs: [build, lint]
     with:
       environmentType: Test
       resourceGroupName: ToyWebsiteTest
@@ -27,12 +31,12 @@ jobs:
 
   # Deploy to the production environment.
   deploy-production:
-    uses: YOUR_GITHUB_USERNAME/toy-website-end-to-end/.github/workflows/deploy.yml@main
-    needs: deploy-test
+    uses: rfrazier/ghdeploymentse2e/.github/workflows/deploy.yml@main
+    needs: [build, lint, deploy-test]
     with:
       environmentType: Production
       resourceGroupName: ToyWebsiteProduction
       reviewApiUrl: https://api.contoso.com/reviews
     secrets:
-      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS_PRODUCTION }}
+      AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS_PROD }}
       reviewApiKey: ${{ secrets.REVIEW_API_KEY_PRODUCTION }}
