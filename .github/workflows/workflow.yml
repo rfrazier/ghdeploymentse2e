@@ -25,9 +25,11 @@ jobs:
       environmentType: Test
       resourceGroupName: GHDeploymentsE2E_Test
       reviewApiUrl: https://sandbox.contoso.com/reviews
+      sqlServerAdministratorLogin: TestToyCompanyAdmin
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS_TEST }}
       reviewApiKey: ${{ secrets.REVIEW_API_KEY_TEST }}
+      sqlServerAdministratorLoginPassword: ${{ secrets.SQL_SERVER_ADMINISTRATOR_LOGIN_PASSWORD_TEST }}
 
   # Deploy to the production environment.
   deploy-production:
@@ -37,6 +39,8 @@ jobs:
       environmentType: Production
       resourceGroupName: GHDeploymentsE2E_Prod
       reviewApiUrl: https://api.contoso.com/reviews
+      sqlServerAdministratorLogin: ToyCompanyAdmin
     secrets:
       AZURE_CREDENTIALS: ${{ secrets.AZURE_CREDENTIALS_PROD }}
       reviewApiKey: ${{ secrets.REVIEW_API_KEY_PRODUCTION }}
+      sqlServerAdministratorLoginPassword: ${{ secrets.SQL_SERVER_ADMINISTRATOR_LOGIN_PASSWORD_PRODUCTION }}
