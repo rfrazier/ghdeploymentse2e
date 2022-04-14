@@ -30,12 +30,17 @@ jobs:
       with:
         name: website
         path: ./src/ToyCompany/ToyCompany.Website/bin/Release/netcoreapp3.1/publish/publish.zip
-        
+
   build-database:
     name: Build database
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
+
+    - name: Install .NET 4.5
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 4.5
 
     - name: Prepare MSBuild
       uses: microsoft/setup-msbuild@v1.0.3
